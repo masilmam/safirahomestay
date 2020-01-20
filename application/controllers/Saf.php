@@ -2,8 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Saf extends CI_Controller {
-  public function index()
-	{
+  public function index() {
     $data = array('judul' => 'Home');
     $this->load->view('landing/header',$data);
     $this->load->view('landing/index');

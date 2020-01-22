@@ -21,7 +21,7 @@ function limitString($x, $length) {
 				<h3>Tentang Kami</h3>
 				<p><?php limitString('Safira Homestay merupakan perusahaan yang bergerak di bidang penyedia akomodasi penginapan di Kabupaten Semarang.
 Mulai beroperasi sejak tahun 2017, Safira Homestay selalu berusaha memberikan pengalaman menginap yang aman, nyaman dan sehat bagi wisatawan dengan harga yang terjangkau.', 100)?></p>
-				<a href="<?= base_url('Saf/about'); ?>">ReadMore</a>
+				<a href="<?= base_url('Main/about'); ?>">ReadMore</a>
 			</div>
 			<div class="footer-grid center-grid">
 				<h3>Hubungi Kami</h3>

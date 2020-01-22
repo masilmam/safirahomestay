@@ -58,10 +58,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="top-nav-left">
 					<ul>
 						<li <?php if($judul == 'Home'){echo 'class="active"';} ?>><a href="<?= base_url(); ?>">Home</a></li>
-						<li <?php if($judul == 'Tentang Kami'){echo 'class="active"';} ?>><a href="<?= base_url('Saf/about'); ?>">Tentang Kami</a></li>
-						<li <?php if($judul == 'Hubungi Kami'){echo 'class="active"';} ?>><a href="<?= base_url('Saf/contact'); ?>">Hubungi Kami</a></li>
-						<li <?php if($judul == 'Booking'){echo 'class="active"';} ?>><a href="<?= base_url('Saf/reservation'); ?>">Booking</a></li>
-						<li><a href="<?= base_url('Saf/login'); ?>">Member Area</a></li>
+						<li <?php if($judul == 'Tentang Kami'){echo 'class="active"';} ?>><a href="<?= base_url('Main/about'); ?>">Tentang Kami</a></li>
+						<li <?php if($judul == 'Hubungi Kami'){echo 'class="active"';} ?>><a href="<?= base_url('Main/contact'); ?>">Hubungi Kami</a></li>
+						<li <?php if($judul == 'Booking'){echo 'class="active"';} ?>><a href="<?= base_url('Main/reservation'); ?>">Booking</a></li>
+						<li><a href="<?= base_url('Main/login'); ?>">Member Area</a></li>
 						<div class="clear"> </div>
 					</ul>
 				</div>

@@ -5,6 +5,10 @@ class Booking extends CI_Controller {
   public function index() {
     $this->load->view('booking/index');
   }
+
+  public function check() {
+    $this->load->view('booking/check');
+  }
 }
 
 ?>

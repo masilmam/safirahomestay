@@ -39,7 +39,7 @@
     <div class="banner-top">
 		<h2>Cek Ketersediaan Homestay</h2>
 		<div class="banner-bottom">
-			<form action="<?php echo base_url('Saf/cek_homestay'); ?>" method="post">
+			<form action="<?php echo base_url('Booking/check'); ?>" method="post">
 			<div class="bnr-one">
 				<div class="bnr-left">
 					<p>Check In</p>

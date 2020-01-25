@@ -89,9 +89,10 @@
 					<p>Pilih Homestay</p>
 				</div>
 				<div class="bnr-right">
-					<select name="id_homestay" id="id_homestay">
-						<?php foreach ($homestay as $row) { ?>
-							<option value="<?php echo $row->id_homestay; ?>"><?php echo $row->nama_homestay; ?></option>
+					<select name="id_homestay" id="id_homestay" required>
+						<option value="">Pilih Homestay</option>
+						<?php foreach ($homestayList as $h) { ?>
+							<option value="<?= $h->id_homestay; ?>"><?= $h->nama_homestay; ?></option>
 						<?php } ?>
 					</select>
 				</div>
@@ -108,8 +109,13 @@
 		<script src="<?= base_url('assets/booking/js/jquery-ui.js'); ?>"></script>
 		<script>
 		$(function() {
-				$("#checkin").datepicker({ minDate : +1});
-				$("#checkout").datepicker({ minDate : +2});
+				$("#checkin").datepicker({ 
+					minDate : +1,
+					dateFormat: 'yy-mm-dd'});
+				$("#checkout").datepicker({ 
+					minDate : +2,
+					dateFormat: 'yy-mm-dd'
+				});
 			});
 
 			$("#checkout").change(function () {

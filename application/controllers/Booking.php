@@ -49,11 +49,83 @@ class Booking extends CI_Controller {
       $checkin = new DateTime($this->input->post('checkin'));
       $checkout = new DateTime($this->input->post('checkout'));
 
-      if($checkin >= $checkout) {
+      if ($checkin >= $checkout) {
         $this->session->set_flashdata('msg', 'Tanggal checkin tidak boleh lebih besar dari tanggal checkout');
         redirect(base_url('Booking'));
       }
-    }
+
+      $jmlMalam = $checkin->diff($checkout);
+
+      $tgl = $checkin->format('Y-m-d');
+      $id_homestay = $this->input->post('id_homestay');
+
+      $where = array(
+        'tgl_checkin' => $tgl,
+        'id_homestay' => $id_homestay
+      );
+
+      if ($jmlMalam->days == 1) {
+        if ($this->M_homestay->check($where, 'sa_terpakai') > 0) {
+          $available = FALSE; //homestay tidak tersedia
+        } else {
+          $available = TRUE; //homestay tersedia
+        }
+      } else {
+        while(1) {
+          if ($this->M_homestay->check($where, 'sa_terpakai') > 0) {
+            $available = FALSE;
+            $stop = 1;
+            //homestay tidak tersedia
+          break;
+          }
+        break;
+        }
+      }
+      if ($stop != 1) {
+        for ($i = 1; $i < $jmlMalam->days; $i++) {
+          $checkin->add(new DateInterval('P1D')); //tgl checkin + 1 hari
+          $tgl = $checkin->format('Y-m-d');
+          $id_homestay = $this->input->post('id_homestay');
+          $where = array(
+            'tgl_checkin' => $tgl,
+            'id_homestay' => $id_homestay
+          );
+
+          if ($this->M_homestay->check($where, 'sa_terpakai') > 0) {
+            $available = FALSE; //homestay tidak tersedia
+          break;
+          } else {
+            $available = TRUE; //homestay tersedia
+          }
+        }
+      }
+
+      $data_homestay = $this->M_basic->read_where('sa_homestay', array('id_homestay' => $id_homestay))->result();
+
+      if ($available == TRUE) {
+        $data = array(
+          'status' => 1,
+          'hasil' => 'Homestay tersedia, Booking Sekarang',
+          'tgl_checkin' => $this->input->post('checkin'),
+          'tgl_checkout' => $this->input->post('checkout'),
+          'lama_menginap' => $jmlMalam->days,
+          'homestay' => $data_homestay,
+          'foto' => $this->M_homestay->read_photo_where_asc(array('id_homestay' => $id_homestay))->row()
+        );
+      } else {
+        $data = array(
+          'status' => 0,
+          'hasil' => 'Maaf homestay tidak tersedia, ubah kriteria pencarian di sini',
+          'tgl_checkin' => $this->input->post('checkin'),
+          'tgl_checkout' => $this->input->post('checkout'),
+          'lama_menginap' => $jmlMalam->days,
+          'homestay' => $data_homestay,
+          'foto' => $this->M_homestay->read_photo_where_asc(array('id_homestay' => $id_homestay))->row()
+        );
+      }
+
+      $this->load->view('booking/result', $data);
+    } //end form validation
   } //end function check()
 }
 

@@ -45,7 +45,7 @@
 					<p>Check In</p>
 				</div>
 				<div class="bnr-right">
-					<input class="date" name="checkin" id="checkin" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required autocomplete="off"=>
+					<input class="date" name="checkin" id="checkin" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}"  autocomplete="off"=>
 					<?php 
 						if(isset($msg)) {
 					?>	
@@ -62,7 +62,7 @@
 					<p>Check Out</p>
 				</div>
 				<div class="bnr-right">
-					<input class="date" name="checkout" id="checkout" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required autocomplete="off"=>
+					<input class="date" name="checkout" id="checkout" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}"  autocomplete="off"=>
 					<?php echo form_error('checkout'); ?>
 				</div>
 				<div class="clearfix"></div>
@@ -89,12 +89,13 @@
 					<p>Pilih Homestay</p>
 				</div>
 				<div class="bnr-right">
-					<select name="id_homestay" id="id_homestay" required>
+					<select name="id_homestay" id="id_homestay" >
 						<option value="">Pilih Homestay</option>
 						<?php foreach ($homestayList as $h) { ?>
 							<option value="<?= $h->id_homestay; ?>"><?= $h->nama_homestay; ?></option>
 						<?php } ?>
 					</select>
+					<?php echo form_error('id_homestay'); ?>
 				</div>
 				<div class="clearfix"></div>
 			</div>

@@ -29,6 +29,11 @@ if ($status != 1) {
     </div>  
   
     <div class="container">
+      <?php 
+        if(isset($msg)) {
+          echo $msg;
+        }
+      ?>
       <u><h3 class="text-center mt-3">Hasil Pencarian</h3></u>
       <div class="card mb-3 mt-3 bg-light" style="max-width: 100%;">
         <div class="row no-gutters">
@@ -136,7 +141,30 @@ if ($status != 1) {
                 <input type="submit" value="Booking Sekarang" class="btn btn-primary">
               </form>
             </div>
-            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">Login</div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+              <form method="post" action="#" class="needs-validation" novalidate>
+                <input type="hidden" name="tgl_checkin" value="<?= $tgl_checkin; ?>">
+                <input type="hidden" name="tgl_checkout" value="<?= $tgl_checkout; ?>">
+                <input type="hidden" name="id_homestay" value="<?= $id_homestay; ?>">
+                <input type="hidden" name="lama_menginap" value="<?=$lama_menginap; ?>">
+                <input type="hidden" name="total" value="<?= $total; ?>">
+                <div class="form-row">
+                  <div class="col-md-6 mb-3 mt-3">
+                    <label>Alamat Email</label>
+                    <input type="text" class="form-control" name="email" placeholder="Alamat Email" value="<?= set_value('email'); ?>" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+                    <div class="invalid-feedback">Silahkan isi alamat email</div>
+                    <div class="invalid-feedback"><?= form_error('email'); ?></div>
+                  </div>
+                  <div class="col-md-6 mb-3 mt-3">
+                    <label>Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="Password"  required>
+                    <div class="invalid-feedback">Silahkan isi password</div>
+                    <div class="invalid-feedback"><?= form_error('password'); ?></div>
+                  </div>
+                </div>
+                <input type="submit" value="Booking Sekarang" class="btn btn-primary">
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -146,43 +174,13 @@ if ($status != 1) {
       ?>
        <div class="card">
         <div class="card-body">
-          <h5 class="card-title text-center"><a href="<?= base_url('Booking'); ?>">Maaf homestay tidak tersedia, ubah kriteria pencarian di sini</a></h5>
+          <h5 class="card-title text-center"><a href="<?= base_url('Booking'); ?>" class="text-decoration-none">Maaf homestay tidak tersedia, ubah kriteria pencarian di sini</a></h5>
         </div>
       </div>
       <?php
       }
       ?>
     </div> <!-- end container -->
-
-    <?php 
-      if(isset($msg)) {
-    ?>
-      <center><?= $msg; ?></center>
-    <?php } ?>
-
-  <?php 
-  if ($status == 1) {
-  ?>       
-  
-      <h3>Homestay Tersedia, Pesan Sekarang. <a href="#login">Sudah Punya Akun?</a></h3>
-      
-      <a href="#" title="Close" class="close">X</a>
-      <h3>Booking Login</h3> 
-      <form action="<?= base_url('saf/booking_login'); ?>" method="post">
-        <input type="hidden" name="tgl_checkin" value="<?= $tgl_checkin; ?>">
-    <input type="hidden" name="tgl_checkout" value="<?= $tgl_checkout; ?>">
-    <input type="hidden" name="id_homestay" value="<?= $id_homestay; ?>">
-    <input type="hidden" name="lama_menginap" value="<?=$lama_menginap; ?>">
-    <input type="hidden" name="total" value="<?= $total; ?>">
-        <label><b>Email</b></label>
-        <input type="text" name="email" required="required" value="<?= set_value('email'); ?>">
-        <?= form_error('email'); ?>
-        <label><b>Password</b></label>
-        <input type="password" name="password" required="required" value="<?= set_value('password'); ?>">
-        <?= form_error('password'); ?>
-        <button type="submit">Log in</button>
-  </form>    
-  <?php } ?>
 
     <script>
     // JS Form validation starter

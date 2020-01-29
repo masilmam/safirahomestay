@@ -14,33 +14,152 @@ if ($status != 1) {
 <html lang="en">
   <head>
     <title>Hasil Pencarian | SAFIRA Homestay</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </head>
   <body>
+    <div class="mt-3">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="<?= base_url();?>">
+          <img src="<?= base_url('assets/landing/images/logo1.png'); ?>" width="280px" height="56px" title="logo"/>
+        </a>
+      </nav>
+    </div>  
+  
+    <div class="container">
+      <u><h3 class="text-center mt-3">Hasil Pencarian</h3></u>
+      <div class="card mb-3 mt-3 bg-light" style="max-width: 100%;">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+              <?php
+                if (isset($foto->nama_foto)) {
+              ?>
+              <img src="<?= base_url('images/homestay/7.jpg'); ?>" class="card-img" alt="Safira Homestay">
+              <?php 
+              } else {
+              ?>
+                <img src="#" class="card-img" alt="Safira Homestay">
+              <?php } ?>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h3 class="card-title"><?= $nama_homestay;?></h3>
+              <p class="card-text">Tanggal Check-In &nbsp;&nbsp;&nbsp;: <?= $tgl_checkin; ?></p>
+              <p class="card-text">Tanggal Check-Out : <?= $tgl_checkout; ?></p>
+              <p class="card-text"><?= $lama_menginap; ?> Malam</p>
+              <h3><u>Rp<?= number_format($total,0,',','.'); ?></u></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <?php
+      if ($status == 1) {
+      ?>
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title text-center">Homestay Tersedia, Booking Sekarang</h5>
+        </div>
+        <div class="card-body">
+          <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Booking</a>
+              <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Sudah Punya Akun?</a>
+            </div>
+          </nav>
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+              <form method="post" action="#" class="needs-validation" novalidate>
+                <input type="hidden" name="tgl_checkin" value="<?= $tgl_checkin; ?>">
+                <input type="hidden" name="tgl_checkout" value="<?= $tgl_checkout; ?>">
+                <input type="hidden" name="id_homestay" value="<?= $id_homestay; ?>">  
+                <input type="hidden" name="lama_menginap" value="<?= $lama_menginap; ?>">
+                <input type="hidden" name="total" value="<?= $total; ?>">
+                <div class="form-row">
+                  <div class="col-md-2 mb-3 mt-3">
+                    <label>Titel</label>
+                    <select class="custom-select" name="titel" required>
+                      <option value="">Pilih Titel</option>
+                      <option value="Tn.">Tn.</option>
+                      <option value="Ny.">Ny.</option>
+                      <option value="Nn.">Nn.</option>
+                    </select>
+                    <div class="invalid-feedback">Silahkan pilih titel</div>
+                    <div class="invalid-feedback"><?= form_error('titel'); ?></div>
+                  </div>
+                  <div class="col-md-5 mb-3 mt-3">
+                    <label>Nama Depan</label>
+                    <input type="text" class="form-control" name="nama_depan" placeholder="Nama Depan" value="<?= set_value('nama_depan'); ?>" required>
+                    <div class="invalid-feedback">Silahkan isi nama depan</div>
+                    <div class="invalid-feedback"><?= form_error('nama_depan'); ?></div>
+                  </div>
+                  <div class="col-md-5 mb-3 mt-3">
+                    <label>Nama Belakang</label>
+                    <input type="text" class="form-control" name="nama_belakang" placeholder="Nama Belakang" value="<?= set_value('nama_belakang'); ?>" required>
+                    <div class="invalid-feedback">Silahkan isi nama belakang</div>
+                    <div class="invalid-feedback"><?= form_error('nama_belakang'); ?></div>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col-md-4 mb-3">
+                    <label>Nomor Telepon</label>
+                    <input type="text" class="form-control" name="telepon" placeholder="Nomor Telepon" value="<?= set_value('telepon'); ?>" pattern="[0-9]+" required>
+                    <div class="invalid-feedback">Silahkan isi nomor telepon</div>
+                    <div class="invalid-feedback"><?= form_error('telepon'); ?></div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label>Alamat Email</label>
+                    <input type="text" class="form-control" name="email" placeholder="Alamat Email" value="<?= set_value('email'); ?>" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+                    <div class="invalid-feedback">Silahkan isi alamat email</div>
+                    <div class="invalid-feedback"><?= form_error('email'); ?></div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label>Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="Password"  required>
+                    <div class="invalid-feedback">Silahkan isi password</div>
+                    <div class="invalid-feedback"><?= form_error('password'); ?></div>
+                  </div>
+                </div>
+                <!-- <div class="form-group">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                    <label class="form-check-label" for="invalidCheck">
+                      Agree to terms and conditions
+                    </label>
+                    <div class="invalid-feedback">
+                      You must agree before submitting.
+                    </div>
+                  </div>
+                </div> -->
+                <input type="submit" value="Booking Sekarang" class="btn btn-primary">
+              </form>
+            </div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">Login</div>
+          </div>
+        </div>
+      </div>
+      
+      <?php 
+      } else {
+      ?>
+       <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-center"><a href="<?= base_url('Booking'); ?>">Maaf homestay tidak tersedia, ubah kriteria pencarian di sini</a></h5>
+        </div>
+      </div>
+      <?php
+      }
+      ?>
+    </div> <!-- end container -->
+
     <?php 
       if(isset($msg)) {
     ?>
-      <center><?php echo $msg; ?></center>
+      <center><?= $msg; ?></center>
     <?php } ?>
-    <a href="index.html"><img src="<?php echo base_url('design_landing/images/logo1.png'); ?>" width="280px" height="56px" title="logo"/></a>
-  
-      <h3>Hasil Pencarian</h3>
-      
-        <?php
-          if (isset($foto->nama_foto)) {
-        ?>
-        <img src="<?php echo base_url('images/homestay/').$foto->nama_foto; ?>" width="309px" height="200px" />
-        <?php 
-          } else {
-        ?>
-          <img src="#"/>
-        <?php } ?>
-    
-      <h3><?php echo $nama_homestay;?></h3>
-      <p>Tanggal Check-In &nbsp;&nbsp;&nbsp;: <?php echo $tgl_checkin; ?></p>
-      <p>Tanggal Check-Out : <?php echo $tgl_checkout; ?></p>
-      <p><?php echo $lama_menginap; ?> Malam</p>
-      <h3><u>Rp<?php echo number_format($total,0,',','.'); ?></u></h3>
-  
+
   <?php 
   if ($status == 1) {
   ?>       
@@ -49,95 +168,42 @@ if ($status != 1) {
       
       <a href="#" title="Close" class="close">X</a>
       <h3>Booking Login</h3> 
-      <form action="<?php echo base_url('saf/booking_login'); ?>" method="post">
-        <input type="hidden" name="tgl_checkin" value="<?php echo $tgl_checkin; ?>">
-    <input type="hidden" name="tgl_checkout" value="<?php echo $tgl_checkout; ?>">
-    <input type="hidden" name="id_homestay" value="<?php echo $id_homestay; ?>">
-    <input type="hidden" name="lama_menginap" value="<?php echo $lama_menginap; ?>">
-    <input type="hidden" name="total" value="<?php echo $total; ?>">
+      <form action="<?= base_url('saf/booking_login'); ?>" method="post">
+        <input type="hidden" name="tgl_checkin" value="<?= $tgl_checkin; ?>">
+    <input type="hidden" name="tgl_checkout" value="<?= $tgl_checkout; ?>">
+    <input type="hidden" name="id_homestay" value="<?= $id_homestay; ?>">
+    <input type="hidden" name="lama_menginap" value="<?=$lama_menginap; ?>">
+    <input type="hidden" name="total" value="<?= $total; ?>">
         <label><b>Email</b></label>
-        <input type="text" name="email" required="required" value="<?php echo set_value('email'); ?>">
-        <?php echo form_error('email'); ?>
+        <input type="text" name="email" required="required" value="<?= set_value('email'); ?>">
+        <?= form_error('email'); ?>
         <label><b>Password</b></label>
-        <input type="password" name="password" required="required" value="<?php echo set_value('password'); ?>">
-        <?php echo form_error('password'); ?>
+        <input type="password" name="password" required="required" value="<?= set_value('password'); ?>">
+        <?= form_error('password'); ?>
         <button type="submit">Log in</button>
-  </form>
-  
-  <h3>Booking daftar</h3>
-      <form method="post" action="<?php echo base_url('Saf/booking_daftar'); ?>">
-        <input type="hidden" name="tgl_checkin" value="<?php echo $tgl_checkin; ?>">
-        <input type="hidden" name="tgl_checkout" value="<?php echo $tgl_checkout; ?>">
-        <input type="hidden" name="id_homestay" value="<?php echo $id_homestay; ?>">  
-        <input type="hidden" name="lama_menginap" value="<?php echo $lama_menginap; ?>">
-        <input type="hidden" name="total" value="<?php echo $total; ?>">      
-        
-          <span><label>Titel</label></span>
-          <span>
-            <select name="titel" class="textbox">
-              <option>Tn.</option>
-              <option>Ny.</option>
-              <option>Nn.</option>
-            </select>
-          </span>
-      
-          <span><label>Nama Depan</label></span>
-          <span>
-            <input type="text" name="nama_depan" class="textbox" required="required" value="<?php echo set_value('nama_depan'); ?>">
-            <?php echo form_error('nama_depan'); ?>
-          </span>
-      
-          <span><label>Nama Belakang</label></span>
-          <span>
-            <input type="text" name="nama_belakang" required="required" value="<?php echo set_value('nama_belakang'); ?>" class="textbox" >
-            <?php echo form_error('nama_belakang'); ?>
-          </span>
-      
-          <span><label>Nomor Telepon</label></span>
-          <span>
-            <input type="text" name="telepon" required="required" value="<?php echo set_value('telepon'); ?>" class="textbox" pattern="[0-9]+" title="Hanya boleh diisi angka" >
-            <?php echo form_error('telepon'); ?>
-          </span>
-        
-          <span><label>Email</label></span>
-          <span>
-            <input type="text" name="email" required="required" value="<?php echo set_value('email'); ?>" class="textbox" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" >
-            <?php echo form_error('email'); ?>
-          </span>
-        
-          <span><label>Password</label></span>
-          <span>
-            <input type="password" name="password" required="required" value="<?php echo set_value('password'); ?>" class="textbox" >
-            <?php echo form_error('password'); ?>
-          </span>
-        
-          <span><input type="submit" value="Pesan Sekarang"></span>
-      
-      </form>
-      
-  <?php 
-  } else {
-  ?>
-  
-      <h3><a href="<?php echo base_url('Saf/main'); ?>">Maaf homestay tidak tersedia, ubah kriteria pencarian di sini</a></h3>
-    
-  <?php
-  }
-  ?>    
+  </form>    
+  <?php } ?>
 
+    <script>
+    // JS Form validation starter
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
+    </script>
 
-<p>Design by <a href="http://w3layouts.com/"> W3layouts</a></p>
-  
-  
-  <!-- <script>
-// Get the modal
-var modal = document.getElementById('id01');
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-</script> -->
   </body>
 </html>
